@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jamal Awadallah - SAP Solution Architect</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: #000000;
+            min-height: 100vh;
+            color: #ffffff;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 80px;
+            background: transparent;
+            border-radius: 0;
+            padding: 80px 20px;
+            border: none;
+            border-bottom: 1px solid #333;
+        }
+
+        .profile-pic {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            margin: 0 auto 40px;
+            background: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 50px;
+            color: #000000;
+            border: 2px solid #333;
+            transition: all 0.3s ease;
+            background-image: url('data:image/jpeg;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==');
+            background-size: cover;
+            background-position: center;
+            overflow: hidden;
+        }
+
+        .profile-pic:hover {
+            border-color: #ffffff;
+            transform: scale(1.05);
+        }
+
+        .profile-pic img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        .name {
+            font-size: 3rem;
+            font-weight: 300;
+            color: #ffffff;
+            margin-bottom: 20px;
+            letter-spacing: -0.02em;
+        }
+
+        .title {
+            font-size: 1.1rem;
+            color: #999999;
+            margin-bottom: 20px;
+            font-weight: 400;
+        }
+
+        .contact-info {
+            color: #666666;
+            font-size: 0.9rem;
+            font-weight: 300;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            margin-bottom: 80px;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .card {
+            background: transparent;
+            border: 1px solid #333;
+            border-radius: 0;
+            padding: 40px;
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            border-color: #666;
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .card h2 {
+            color: #ffffff;
+            margin-bottom: 30px;
+            font-size: 1.3rem;
+            font-weight: 300;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .chat-container {
+            height: 500px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 0;
+            background: transparent;
+            border: none;
+            margin-bottom: 30px;
+        }
+
+        .message {
+            margin-bottom: 20px;
+            padding: 20px;
+            border-radius: 0;
+            max-width: 85%;
+            animation: messageSlide 0.3s ease;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .user-message {
+            background: #ffffff;
+            color: #000000;
+            margin-left: auto;
+            text-align: right;
+            border: 1px solid #e0e0e0;
+        }
+
+        .bot-message {
+            background: transparent;
+            color: #ffffff;
+            margin-right: auto;
+            border: 1px solid #333;
+        }
+
+        .chat-input-container {
+            display: flex;
+            gap: 10px;
+        }
+
+        .chat-input {
+            flex: 1;
+            padding: 15px 20px;
+            border: 1px solid #333;
+            border-radius: 0;
+            background: transparent;
+            color: #ffffff;
+            font-size: 0.9rem;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .chat-input:focus {
+            border-color: #ffffff;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .chat-input::placeholder {
+            color: #666;
+        }
+
+        .send-btn {
+            padding: 15px 30px;
+            background: #ffffff;
+            color: #000000;
+            border: none;
+            border-radius: 0;
+            cursor: pointer;
+            font-weight: 400;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            transition: all 0.3s ease;
+        }
+
+        .send-btn:hover {
+            background: #000000;
+            color: #ffffff;
+            border: 1px solid #ffffff;
+        }
+
+        .skills-mindmap {
+            height: 500px;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid #333;
+            background: transparent;
+        }
+
+        .skill-detail-panel {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 280px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid #333;
+            padding: 20px;
+            transform: translateX(300px);
+            transition: transform 0.3s ease;
+            z-index: 20;
+        }
+
+        .skill-detail-panel.active {
+            transform: translateX(0);
+        }
+
+        .skill-detail-header {
+            font-size: 1.1rem;
+            font-weight: 400;
+            margin-bottom: 15px;
+            color: #ffffff;
+            border-bottom: 1px solid #333;
+            padding-bottom: 10px;
+        }
+
+        .skill-detail-content {
+            font-size: 0.85rem;
+            line-height: 1.5;
+            color: #cccccc;
+        }
+
+        .skill-experience {
+            margin-bottom: 10px;
+            font-weight: 300;
+        }
+
+        .skill-projects {
+            margin-top: 15px;
+        }
+
+        .skill-projects h4 {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 8px;
+            color: #ffffff;
+        }
+
+        .skill-projects ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .skill-projects li {
+            margin-bottom: 5px;
+            padding-left: 10px;
+            border-left: 1px solid #333;
+            font-size: 0.8rem;
+        }
+
+        .close-detail {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            color: #666;
+            cursor: pointer;
+            font-size: 1.2rem;
+            padding: 0;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .close-detail:hover {
+            color: #ffffff;
+        }
+
+        .mindmap-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 140px;
+            height: 140px;
+            background: transparent;
+            border: 2px solid #ffffff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
+            font-weight: 300;
+            font-size: 14px;
+            text-align: center;
+            z-index: 10;
+            transition: all 0.3s ease;
+        }
+
+        .mindmap-center:hover {
+            background: #ffffff;
+            color: #000000;
+        }
+
+        .skill-node {
+            position: absolute;
+            width: 90px;
+            height: 90px;
+            border: 1px solid #666;
+            background: transparent;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
+            font-size: 11px;
+            font-weight: 300;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .skill-node:hover {
+            background: #ffffff;
+            color: #000000;
+            border-color: #ffffff;
+            transform: scale(1.05);
+            z-index: 5;
+        }
+
+        .skill-node.active {
+            background: #ffffff;
+            color: #000000;
+            border-color: #ffffff;
+            transform: scale(1.1);
+        }
+
+        .skill-line {
+            position: absolute;
+            height: 1px;
+            background: #333;
+            transform-origin: left center;
+            z-index: 1;
+        }
+
+        .construction-notice {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid #333;
+            padding: 15px 20px;
+            font-size: 0.8rem;
+            color: #999;
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .construction-notice:hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: #ccc;
+        }
+
+        .typing-indicator {
+            display: none;
+            padding: 20px;
+            margin-bottom: 20px;
+            background: transparent;
+            border: 1px solid #333;
+            max-width: 80px;
+            margin-right: auto;
+        }
+
+        .typing-dots {
+            display: flex;
+            gap: 4px;
+        }
+
+        .typing-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #666;
+            animation: typing 1.4s infinite ease-in-out;
+        }
+
+        .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+        .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes typing {
+            0%, 60%, 100% { transform: translateY(0); opacity: 0.5; }
+            30% { transform: translateY(-10px); opacity: 1; }
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .name {
+                font-size: 2rem;
+            }
+            
+            .container {
+                padding: 10px;
+            }
+
+            .construction-notice {
+                bottom: 10px;
+                right: 10px;
+                left: 10px;
+                text-align: center;
+                font-size: 0.7rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="profile-pic"></div>
+            <h1 class="name">Jamal Awadallah</h1>
+            <p class="title">Technical Architect | Data, AI, & Integration | SAP BTP, GCP</p>
+            <p class="contact-info">JamalAwadallah@gmail.com | Milwaukee, WI</p>
+        </header>
+
+        <div class="main-content">
+            <div class="card">
+                <h2>💬 Ask About My Experience</h2>
+                <div class="chat-container">
+                    <div class="chat-messages" id="chatMessages">
+                        <div class="message bot-message">
+                            Hello! I'm an AI assistant with comprehensive knowledge about Jamal's 10+ years as an SAP Solution Architect. Ask me about his S/4HANA implementations, cloud expertise, data architecture projects, or leadership experience. What would you like to know?
+                        </div>
+                    </div>
+                    <div class="typing-indicator" id="typingIndicator">
+                        <div class="typing-dots">
+                            <div class="typing-dot"></div>
+                            <div class="typing-dot"></div>
+                            <div class="typing-dot"></div>
+                        </div>
+                    </div>
+                    <div class="chat-input-container">
+                        <input type="text" class="chat-input" id="chatInput" placeholder="Ask about SAP experience, projects, skills...">
+                        <button class="send-btn" id="sendBtn">Send</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>🧠 Core Skills</h2>
+                <div class="skills-mindmap" id="skillsMindmap">
+                    <div class="mindmap-center">SAP<br>Architect</div>
+                    <div class="skill-detail-panel" id="skillDetailPanel">
+                        <button class="close-detail" id="closeDetail">×</button>
+                        <div class="skill-detail-header" id="skillDetailHeader"></div>
+                        <div class="skill-detail-content" id="skillDetailContent"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Construction Notice -->
+    <div class="construction-notice">
+        🚧 Site under construction - More content coming soon
+    </div>
+
+    <script>
+        // Professional profile data
+        const profile = {
+            name: "Jamal Awadallah",
+            title: "Technical Architect",
+            experience: "10+ years",
+            location: "Milwaukee, WI",
+            email: "JamalAwadallah@gmail.com",
+            skills: {
+                sap: ["SAP S/4HANA", "MDG", "BTP", "Datasphere", "Integration Suite"],
+                cloud: ["SAP BTP", "Google Cloud", "Azure", "Kubernetes", "Docker"],
+                data: ["Data Architecture", "ETL/ELT", "Migration", "Warehousing"],
+                ai: ["SAP AI Core", "GCP Vertex AI", "ML Models", "RAG"],
+                languages: ["Python", "ABAP", "SQL", "Groovy"]
+            },
+            achievements: [
+                "Reduced production issues by 70% (2000 to 600 per month)",
+                "Led 5+ S/4HANA implementations across global enterprises",
+                "Designed ML-powered ServiceNow automation for incident management",
+                "Successfully migrated enterprise data warehouse to GCP"
+            ]
+        };
+
+        // Chat functionality
+        const chatMessages = document.getElementById('chatMessages');
+        const chatInput = document.getElementById('chatInput');
+        const sendBtn = document.getElementById('sendBtn');
+        const typingIndicator = document.getElementById('typingIndicator');
+
+        function addMessage(message, isUser = false) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${isUser ? 'user-message' : 'bot-message'}`;
+            messageDiv.textContent = message;
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function showTyping() {
+            typingIndicator.style.display = 'block';
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function hideTyping() {
+            typingIndicator.style.display = 'none';
+        }
+
+        function generateResponse(question) {
+            const q = question.toLowerCase();
+            
+            if (q.includes('experience') || q.includes('years')) {
+                return `Jamal has ${profile.experience} of SAP architecture experience. He's currently SAP Technical Architect/Lead at HCL Axon and has delivered 5+ S/4HANA implementations for global enterprises including aerospace, food & beverage, and pharmaceutical companies.`;
+            }
+            
+            if (q.includes('skill') || q.includes('sap') || q.includes('technology')) {
+                return `Jamal's core expertise includes SAP S/4HANA, MDG, BTP, Datasphere, and Integration Suite. He's also skilled in cloud platforms (SAP BTP, GCP, Azure), data architecture, AI/ML (SAP AI Core, Vertex AI), and programming languages like Python, ABAP, and SQL.`;
+            }
+            
+            if (q.includes('project') || q.includes('implementation')) {
+                return `Notable projects: Led "Go Green" initiative reducing production issues by 70%, designed SAP Data Fabric Architecture with Azure federation, architected greenfield S/4HANA+MDG for global aerospace company, and migrated enterprise data warehouse to Google Cloud Platform.`;
+            }
+            
+            if (q.includes('achievement') || q.includes('success')) {
+                return `Key achievements: ${profile.achievements.slice(0,2).join('. ')}. Jamal consistently delivers measurable business impact through innovative technical solutions and strategic leadership.`;
+            }
+            
+            if (q.includes('cloud') || q.includes('btp') || q.includes('gcp')) {
+                return `Jamal has deep cloud expertise across SAP BTP, Google Cloud Platform, and Azure. He's architected hybrid solutions, implemented containerization with Kubernetes/Docker, and successfully migrated enterprise workloads to cloud platforms.`;
+            }
+            
+            if (q.includes('ai') || q.includes('artificial intelligence') || q.includes('machine learning')) {
+                return `Jamal is experienced with SAP Business AI/AI Core and GCP Vertex AI. He has hands-on experience with prompt design, RAG/Grounding, model training and deployment, and has built agentic AI solutions with functions and tools.`;
+            }
+            
+            if (q.includes('leadership') || q.includes('team')) {
+                return `Jamal has proven leadership experience managing international cross-functional teams. At Deloitte, he led teams across multiple continents for complex S/4HANA implementations, consistently delivering on time and exceeding expectations.`;
+            }
+            
+            if (q.includes('contact') || q.includes('hire') || q.includes('available')) {
+                return `You can reach Jamal at ${profile.email}. He's currently open to discussing new SAP architecture opportunities, particularly those involving S/4HANA transformations, cloud migrations, or AI implementations.`;
+            }
+            
+            if (q.includes('hello') || q.includes('hi')) {
+                return `Hello! I'm here to tell you about Jamal Awadallah, an accomplished SAP Solution Architect with 10+ years of experience specializing in enterprise transformations, data architecture, and AI implementations. What would you like to know?`;
+            }
+            
+            return `That's an excellent question! Jamal is an experienced ${profile.title} with ${profile.experience} specializing in enterprise SAP transformations and cloud architecture. He's known for delivering measurable business impact through innovative solutions. What specific aspect interests you most?`;
+        }
+
+        function sendMessage() {
+            const message = chatInput.value.trim();
+            if (!message) return;
+
+            addMessage(message, true);
+            chatInput.value = '';
+            
+            showTyping();
+            
+            setTimeout(() => {
+                hideTyping();
+                const response = generateResponse(message);
+                addMessage(response);
+            }, 1000 + Math.random() * 1000);
+        }
+
+        sendBtn.addEventListener('click', sendMessage);
+        chatInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+
+        // Enhanced skills data with detailed information
+        const skillsData = [
+            { 
+                name: 'S/4HANA', 
+                angle: 0,
+                experience: '5+ years',
+                description: 'Extensive experience in SAP S/4HANA implementations, migrations, and optimizations.',
+                projects: [
+                    'Led 5+ greenfield implementations',
+                    'Brownfield migration strategies',
+                    'Performance optimization initiatives',
+                    'Global rollout coordination'
+                ]
+            },
+            { 
+                name: 'SAP BTP', 
+                angle: 45,
+                experience: '3+ years',
+                description: 'Deep expertise in SAP Business Technology Platform for integration, extension, and innovation.',
+                projects: [
+                    'Integration Suite implementations',
+                    'Cloud-to-cloud integrations',
+                    'Extension development',
+                    'AI/ML model deployment'
+                ]
+            },
+            { 
+                name: 'Data Arch', 
+                angle: 90,
+                experience: '8+ years',
+                description: 'Comprehensive data architecture design for enterprise-scale data management and analytics.',
+                projects: [
+                    'Data warehouse migrations to cloud',
+                    'Real-time data replication strategies',
+                    'Master data governance frameworks',
+                    'ETL/ELT pipeline optimization'
+                ]
+            },
+            { 
+                name: 'Python', 
+                angle: 135,
+                experience: '6+ years',
+                description: 'Proficient in Python for data engineering, automation, and machine learning implementations.',
+                projects: [
+                    'GCP Big Query API automation',
+                    'Data validation frameworks',
+                    'ML model development',
+                    'Process automation scripts'
+                ]
+            },
+            { 
+                name: 'GCP', 
+                angle: 180,
+                experience: '4+ years',
+                description: 'Google Cloud Platform expertise with Professional Cloud Architect certification.',
+                projects: [
+                    'Enterprise data warehouse migration',
+                    'Vertex AI implementations',
+                    'Big Query data modeling',
+                    'Cloud infrastructure design'
+                ]
+            },
+            { 
+                name: 'AI/ML', 
+                angle: 225,
+                experience: '3+ years',
+                description: 'Applied AI and machine learning with focus on enterprise integration and automation.',
+                projects: [
+                    'SAP AI Core implementations',
+                    'Prompt engineering and RAG',
+                    'ServiceNow ML automation',
+                    'Model training and deployment'
+                ]
+            },
+            { 
+                name: 'MDG', 
+                angle: 270,
+                experience: '6+ years',
+                description: 'SAP Master Data Governance expertise for data quality and stewardship initiatives.',
+                projects: [
+                    'MDG-S/4HANA integration design',
+                    'Data syndication strategies',
+                    'Workflow and approval processes',
+                    'Data quality frameworks'
+                ]
+            },
+            { 
+                name: 'Integration', 
+                angle: 315,
+                experience: '10+ years',
+                description: 'Comprehensive integration expertise across multiple platforms and technologies.',
+                projects: [
+                    'API and web service development',
+                    'Message queue implementations',
+                    'Hybrid cloud integrations',
+                    'Real-time data streaming'
+                ]
+            }
+        ];
+
+        function createSkillsMindMap() {
+            const mindmap = document.getElementById('skillsMindmap');
+            const detailPanel = document.getElementById('skillDetailPanel');
+            const detailHeader = document.getElementById('skillDetailHeader');
+            const detailContent = document.getElementById('skillDetailContent');
+            const closeDetail = document.getElementById('closeDetail');
+            const radius = 150;
+            
+            // Close detail panel
+            closeDetail.addEventListener('click', () => {
+                detailPanel.classList.remove('active');
+                document.querySelectorAll('.skill-node').forEach(node => {
+                    node.classList.remove('active');
+                });
+            });
+            
+            skillsData.forEach((skill) => {
+                const node = document.createElement('div');
+                node.className = 'skill-node';
+                node.textContent = skill.name;
+                
+                const angleRad = (skill.angle * Math.PI) / 180;
+                const x = 50 + (radius * Math.cos(angleRad)) / 5;
+                const y = 50 + (radius * Math.sin(angleRad)) / 5;
+                
+                node.style.left = `calc(${x}% - 45px)`;
+                node.style.top = `calc(${y}% - 45px)`;
+                
+                // Add click event for skill details
+                node.addEventListener('click', () => {
+                    // Remove active class from all nodes
+                    document.querySelectorAll('.skill-node').forEach(n => n.classList.remove('active'));
+                    
+                    // Add active class to clicked node
+                    node.classList.add('active');
+                    
+                    // Update detail panel content
+                    detailHeader.textContent = skill.name;
+                    detailContent.innerHTML = `
+                        <div class="skill-experience"><strong>Experience:</strong> ${skill.experience}</div>
+                        <div>${skill.description}</div>
+                        <div class="skill-projects">
+                            <h4>Key Projects & Achievements</h4>
+                            <ul>
+                                ${skill.projects.map(project => `<li>• ${project}</li>`).join('')}
+                            </ul>
+                        </div>
+                    `;
+                    
+                    // Show detail panel
+                    detailPanel.classList.add('active');
+                });
+                
+                const line = document.createElement('div');
+                line.className = 'skill-line';
+                line.style.left = '50%';
+                line.style.top = '50%';
+                line.style.width = `${radius / 5}%`;
+                line.style.transform = `rotate(${skill.angle}deg)`;
+                
+                mindmap.appendChild(line);
+                mindmap.appendChild(node);
+            });
+        }
+
+        // Load profile picture when page loads
+        window.addEventListener('load', function() {
+            const profilePic = document.querySelector('.profile-pic');
+            
+            // Try to read the uploaded file
+            if (window.fs && window.fs.readFile) {
+                try {
+                    window.fs.readFile('image.png', { encoding: 'base64' })
+                        .then(data => {
+                            profilePic.style.backgroundImage = `url(data:image/png;base64,${data})`;
+                        })
+                        .catch(() => {
+                            // Fallback to placeholder if file not found
+                            profilePic.innerHTML = '👨‍💻';
+                            profilePic.style.backgroundColor = '#ffffff';
+                            profilePic.style.color = '#000000';
+                        });
+                } catch (e) {
+                    // Fallback to placeholder
+                    profilePic.innerHTML = '👨‍💻';
+                    profilePic.style.backgroundColor = '#ffffff';
+                    profilePic.style.color = '#000000';
+                }
+            } else {
+                // Fallback to placeholder
+                profilePic.innerHTML = '👨‍💻';
+                profilePic.style.backgroundColor = '#ffffff';
+                profilePic.style.color = '#000000';
+            }
+        });
+        
+        createSkillsMindMap();
+    </script>
+</body>
+</html>
